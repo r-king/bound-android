@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_library">
+
+    <fragment
+        android:id="@+id/navigation_library"
+        android:name="io.richardking.bound.bound.ui.library.LibraryFragment"
+        android:label="@string/title_library"
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/showBook"
+            app:destination="@id/bookFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_wishlist"
+        android:name="io.richardking.bound.ui.wishlist.WishlistFragment"
+        android:label="@string/title_wishlist"
+        tools:layout="@layout/fragment_wishlist">
+        <action
+            android:id="@+id/showBook"
+            app:destination="@id/bookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_favourites"
+        android:name="io.richardking.bound.ui.favourites.FavouritesFragment"
+        android:label="@string/title_favourites"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/showBook"
+            app:destination="@id/bookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="io.richardking.bound.ui.search.SearchFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/showBook"
+            destination="@+id/bookFragment"
+            app:destination="@id/bookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookFragment"
+        android:name="io.richardking.bound.ui.book.BookFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_book">
+        <argument
+            android:name="id"
+            app:type="string" />
+    </fragment>
+
+</navigation>

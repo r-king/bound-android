@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.Html" />
+
+        <import type="android.view.View" />
+
+        <import type="com.google.common.base.Joiner" />
+
+        <variable
+            name="book"
+            type="io.richardking.bound.vo.Book" />
+
+        <variable
+            name="handler"
+            type="io.richardking.bound.ui.book.BookFragment" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/thumbnail_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/book_horizontal_margin"
+                android:layout_marginEnd="@dimen/book_vertical_margin"
+                app:imageUrl="@{book.volumeInfo.imageLinks.smallThumbnail}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/book_vertical_margin"
+                android:layout_marginTop="@dimen/book_horizontal_margin"
+                android:text="@{book.volumeInfo.title}"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="book title" />
+
+            <TextView
+                android:id="@+id/authors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/book_vertical_margin"
+                android:layout_marginTop="8dp"
+                android:text="@{book.volumeInfo.authors != null ? Joiner.on(`, `).join(book.volumeInfo.authors) : ``}"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/book_vertical_margin"
+                android:text="@{book.volumeInfo.publishedDate.substring(0,4)}"
+                android:textAlignment="viewEnd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/authors" />
+
+            <View
+                android:id="@+id/lineBreak"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/book_horizontal_margin"
+                android:background="@color/lineBreak"
+                app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+            <LinearLayout
+                android:id="@+id/actionButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/book_horizontal_margin"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/lineBreak">
+
+                <Button
+                    android:id="@+id/btn_add_to_library"
+                    style="@style/ButtonBorder.Accent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_add_black_24dp"
+                    android:text="@string/add_to_library"
+                    android:visibility="@{!book.inLibrary ? View.VISIBLE : View.GONE}" />
+
+                <Button
+                    android:id="@+id/btn_remove_from_library"
+                    style="@style/ButtonBorder.Fill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_check_black_24dp"
+                    android:text="@string/in_library"
+                    android:visibility="@{book.inLibrary ? View.VISIBLE : View.GONE}" />
+
+                <Button
+                    android:id="@+id/btn_add_to_wishlist"
+                    style="@style/ButtonBorder.Accent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:drawableStart="@drawable/ic_add_black_24dp"
+                    android:text="@string/add_to_wishlist"
+                    android:visibility="@{!book.wishList ? View.VISIBLE : View.GONE}" />
+
+                <Button
+                    android:id="@+id/btn_remove_from_wishlist"
+                    style="@style/ButtonBorder.Fill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:drawableStart="@drawable/ic_check_black_24dp"
+                    android:text="@string/on_wishlist"
+                    android:visibility="@{book.wishList ? View.VISIBLE : View.GONE}" />
+
+                <ImageButton
+                    android:id="@+id/btn_add_to_favourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    android:tint="@android:color/darker_gray"
+                    android:visibility="@{!book.favourite ? View.VISIBLE : View.GONE}" />
+
+                <ImageButton
+                    android:id="@+id/btn_remove_from_favourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_check_black_24dp"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    android:text="@string/on_wishlist"
+                    android:tint="@color/colorAccent"
+                    android:visibility="@{book.favourite ? View.VISIBLE : View.GONE}" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/lineBreak2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/book_horizontal_margin"
+                android:background="@color/lineBreak"
+                app:layout_constraintTop_toBottomOf="@+id/actionButtons" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/book_vertical_margin"
+                android:layout_marginTop="@dimen/book_horizontal_margin"
+                android:layout_marginEnd="@dimen/book_vertical_margin"
+                android:layout_marginBottom="@dimen/book_horizontal_margin"
+                android:fontFamily="sans-serif-light"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@{book.volumeInfo.description != null ? Html.fromHtml(Html.fromHtml(book.volumeInfo.description).toString()).toString() : ``}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/lineBreak2" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>
